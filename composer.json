@@ -1,0 +1,25 @@
+{
+    "name": "bb3mobi/UserPayments",
+    "type": "phpbb-extension",
+    "description": "Система монетизации и сервис оплаты",
+    "homepage": "http://bb3.mobi",
+    "version": "1.0.5",
+    "time": "2015-12-21",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Anvar",
+            "homepage": "http://apwa.ru",
+            "role": "Developer to extension"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "extra": {
+        "display-name": "User Payments System - by Anvar",
+        "soft-require": {
+           "phpbb/phpbb": ">=3.1.7-RC1,<3.2.*@dev"
+        }
+    }
+}

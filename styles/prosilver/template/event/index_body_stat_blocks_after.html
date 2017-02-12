@@ -1,0 +1,24 @@
+<!-- IF S_DONATE_ENABLE -->
+<div class="post has-profile bg3">
+	<div class="inner">
+		<!-- IF DONATE_TEXT -->
+		<dl class="postprofile">
+			<dt class="no-profile-rank <!-- IF S_REGISTERED_USER -->has-avatar<!-- ELSE -->no-avatar<!-- ENDIF -->">
+				<div class="avatar-container">
+					<!-- IF CURRENT_USER_AVATAR --><span class="avatar">{CURRENT_USER_AVATAR}</span><!-- ENDIF -->
+				</div>
+				<!-- IF CURRENT_USERNAME_SIMPLE --><strong>{CURRENT_USERNAME_SIMPLE}</strong><!-- ENDIF -->
+			</dt>
+			<dd class="profile-rank"><a href="{U_DONATE_LINK}" class="button">{L_DONATE_ADD}</a></dd>
+		</dl>
+		<!-- ELSE -->
+		<div class="right-box"><a href="{U_DONATE_LINK}" class="button">{L_DONATE_ADD}</a></div>
+		<!-- ENDIF -->
+		<div class="postbody">
+			<h3>{L_DONATE_SUBJECT}</h3>
+			<!-- ul class="post-buttons"><li></li></ul -->
+			<!-- IF DONATE_TEXT --><div class="content">{DONATE_TEXT}</div><!-- ENDIF -->
+		</div>
+	</div>
+</div>
+<!-- ENDIF -->

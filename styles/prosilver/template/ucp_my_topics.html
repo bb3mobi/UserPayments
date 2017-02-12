@@ -1,0 +1,43 @@
+<!-- INCLUDE simple_header.html -->
+<form method="post" id="results" action="{S_MODE_ACTION}" onsubmit="insert_marked_users('#results', this.user); return false;" data-form-name="{S_FORM_NAME}" data-field-name="{S_FIELD_NAME}">
+
+<h2>{L_TOPICS} - {L_SELECT}</h2>
+
+
+<!-- BEGIN topicrow -->
+	<!-- IF topicrow.S_FIRST_ROW -->
+	<table class="table1">
+		<tr>
+	<!-- ENDIF -->
+
+	<td class="<!-- IF topicrow.S_ROW_COUNT is odd -->bg1<!-- ELSE -->bg2<!-- ENDIF -->" width="50%">
+	{topicrow.TOPIC_ID}. <a href="#" onclick="insert_single_user('#results', '{topicrow.TOPIC_ID}'); return false;">{topicrow.TOPIC_TITLE}</a>
+	<!-- IF topicrow.FORUM_AUTH --> - <span class="error">{L_UCP_STICKY_AUTH_FREE}</span><!-- ENDIF -->
+	</td>
+
+	<!-- IF topicrow.S_ROW_COUNT is odd -->
+		</tr>
+		<tr>
+	<!-- ENDIF -->
+
+	<!-- IF topicrow.S_LAST_ROW -->
+		</tr>
+	</table>
+	<!-- ENDIF -->
+<!-- BEGINELSE -->
+	<div class="panel">
+		<div class="inner">
+			<p>{L_NO_TOPIC}</p>
+		</div>
+	</div>
+<!-- END topicrow -->
+
+<!-- IF .pagination -->
+	<div class="pagination">
+		<!-- INCLUDE pagination.html -->
+	</div>
+<!-- ENDIF -->
+
+<a href="#" onclick="window.close(); return false;">{L_CLOSE_WINDOW}</a>
+</form>
+<!-- INCLUDE simple_footer.html -->

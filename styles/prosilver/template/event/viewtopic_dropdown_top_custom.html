@@ -1,0 +1,27 @@
+<!-- IF S_BUDGET_ENABLE or (TOPIC_BUDGET && S_BUDGET_POST_ENABLE == 1) -->
+<div class="dropdown-container dropdown-button-control topic-tools">
+	<a title="{L_BUDGET_TOPIC}" href="{U_BUDGET_ADD}" class="button<!-- IF S_PAYMENTS_ENABLE and S_BUDGET_ENABLE --> dropdown-trigger dropdown-select<!-- ENDIF -->">{TOPIC_BUDGET}{L_MONEY}</a>
+	<!-- IF S_PAYMENTS_ENABLE and S_BUDGET_ENABLE -->
+	<div class="dropdown hidden">
+		<div class="pointer"><div class="pointer-inner"></div></div>
+		<form method="post" action="{U_BUDGET_ADD}">
+		<ul class="dropdown-contents">
+			<li title="{BUDGET_DESCRIPTION}"><strong>{L_BUDGET_TOPIC}{L_COLON} {TOPIC_BUDGET}{L_MONEY}</strong></li>
+			<li><fieldset>
+					<dl>
+						<dt><label for="sum">{L_EXPENSE_SUM}{L_COLON}</label></dt>
+						<dd><input type="number" name="sum" id="sum" value="0" class="inputbox autowidth" /> {L_MONEY}</dd>
+					</dl>
+					<dl>
+						<dt><label for="comment">{L_EXPENSE_COMMENT}{L_COLON}</label></dt>
+						<dd><textarea class="inputbox" name="comment" id="comment" rows="2" cols="30">{COMMENT}</textarea></dd>
+					</dl>
+				</fieldset>
+				<fieldset class="submit-buttons"><input type="submit" name="submit" value="{L_BUDGET_ADD}" class="button1" /></fieldset>
+			</li>
+		</ul>
+		</form>
+	</div>
+	<!-- ENDIF -->
+</div>
+<!-- ENDIF -->

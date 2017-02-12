@@ -1,0 +1,17 @@
+<!-- IF ADS_BOTTOM -->
+<div class="forabg">
+	<div class="row">
+	<!-- BEGIN adsrow -->
+		<!-- IF adsrow.ADS_POSITION == 'bottom' -->
+		- <a href="{adsrow.U_ADS_URL}">{adsrow.L_ADS_NAME}</a>
+		<!-- IF adsrow.U_ADS_DISABLE --> <a title="{L_ADS_DISALLOW}" href="{adsrow.U_ADS_DISABLE}"><span>!</span></a><!-- ENDIF -->
+		<br />
+		<!-- ENDIF -->
+	<!-- END adsrow -->
+	<!-- IF S_ADS_BOTTOM -->
+		- <a href="{U_ADS_BOTTOM}">{L_ADS_ADD_ENABLE}</a> [{L_ADS_BOTTOM}{L_MONEY}]
+		<!-- IF U_ACP --> <a title="{L_ADS_SITES}" href="{U_ADS_SITES}"><span>i</span></a><!-- ENDIF -->
+	<!-- ENDIF -->
+	</div>
+</div>
+<!-- ENDIF -->

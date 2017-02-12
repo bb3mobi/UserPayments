@@ -1,0 +1,126 @@
+<!-- INCLUDE overall_header.html -->
+<div class="panel">
+	<div class="inner">
+	<h2>{L_INVOICE_PAYMENT}</h2>
+	<!-- IF ERROR --><p class="error">{ERROR}</p><!-- ENDIF -->
+	<p>{INVOICE} | {L_INVOICE_SUM}{L_COLON} {INVOICE_SUM}{L_MONEY} | {INVOICE_COMMENT}</p>
+	<!-- IF S_MY_TRANSFER -->
+	<form id="payment" method="post" action="{S_PAYMENT_ACTION}">
+	<div class="post bg3">{L_PAYMENT_INTERNAL}{L_COLON} <b>{USER_MONEY}{L_MONEY}</b>
+		<!-- IF USER_MONEY >= INVOICE_SUM -->
+		{S_HIDDEN_FIELDS}<input type="submit" name="submit" value="{L_PAYMENT_BUTTON}" class="button1" />{S_FORM_TOKEN}
+		<!-- ELSE -->
+		<span class="error">{L_USER_MONEY_ERROR}</span>
+		<!-- ENDIF -->
+	</div>
+	</form>
+	<!-- ENDIF -->
+	</div>
+</div>
+<!-- IF .methods or S_WEBMONEY_ENABLE or S_INTERKASSA_ENABLE -->
+<div class="forabg">
+	<div class="inner">
+	<table class="table1">
+		<thead><th colspan="2" class="header">{L_PAYMENT_METHODS}</th></thead>
+		<tbody>
+			<!-- IF S_WEBMONEY_ENABLE -->
+			<tr>
+				<td class="center bg1">{L_PAYMENT_EXTERNAL} {L_PAYMENT_WEBMONEY}
+					<p><img src="{BOARD_URL}{S_EXTENSION_PATH}webmoney.jpg" alt="{L_PAYMENT_WEBMONEY}" /></p></td>
+				<td class="bg2" width="70%">
+					<form method="post" action="https://merchant.webmoney.ru/lmi/payment.asp">
+					<fieldset>
+					<input type="hidden" name="LMI_PAYMENT_NO" value="{INVOICE_ID}" />
+					<input type="hidden" name="LMI_PAYMENT_AMOUNT" value="{INVOICE_SUM}" />
+					<input type="hidden" name="LMI_PAYMENT_DESC_BASE64" value="{PAYMENT_DESC_BASE64}" />
+					<input type="hidden" name="LMI_PAYEE_PURSE" value="{WEBMONEY_PURSE}" />
+					<input type="hidden" name="id" size="{INVOICE_ID}" />
+					<input type="hidden" name="email" size="{PAYMENT_EMAIL}" />
+					<input type="submit" value="{L_BUTTON_TO_PAYMENT}" class="button1" />
+					<fieldset>
+					</form>
+				</td>
+			</tr>
+			<!-- ENDIF -->
+
+			<!-- IF S_YANDEX_ENABLE -->
+			<tr>
+				<td class="center bg1">{L_PAYMENT_EXTERNAL} {L_PAYMENT_YANDEX}
+					<p><img src="{BOARD_URL}{S_EXTENSION_PATH}yandex.jpg" alt="{L_PAYMENT_YANDEX}" /></p></td>
+				<td class="bg2" width="70%">
+					<form method="post" action="https://money.yandex.ru/quickpay/confirm.xml">
+					<fieldset>
+					<input type="hidden" name="receiver" value="{YANDEX_PURSE}" />
+					<input type="hidden" name="formcomment" value="{SITENAME} - {INVOICE}" />
+					<input type="hidden" name="label" value="{INVOICE_ID}" />
+					<input type="hidden" name="quickpay-form" value="shop" />
+					<input type="hidden" name="targets" value="{INVOICE_COMMENT}" />
+					<input type="hidden" name="sum" value="{YANDEX_INVOICE_SUM}" data-type="number" />
+					<input type="hidden" name="short-dest" value="{INVOICE}" />
+					<input type="hidden" name="successURL" value="{U_PAYMENT_ACTION_YES}" />
+					<p><input type="radio" name="paymentType" value="PC" checked="checked" />{L_PAYMENT_YANDEX_PURSE}
+					<input type="radio" name="paymentType" value="AC" />{L_PAYMENT_BANK_CARD}</p>
+					<input type="submit" value="{L_BUTTON_TO_PAYMENT}" class="button1" />
+					<fieldset>
+					</form>
+				</td>
+			</tr>
+			<!-- ENDIF -->
+
+			<!-- IF S_INTERKASSA_ENABLE -->
+			<tr>
+				<td class="center bg1">{L_PAYMENT_EXTERNAL} {L_PAYMENT_INTERKASSA}
+					<p><img src="{BOARD_URL}{S_EXTENSION_PATH}interkassa.jpg" alt="{L_PAYMENT_INTERKASSA}" /></p></td>
+				<td class="bg2" width="70%">
+					<form method="post" action="https://sci.interkassa.com/" name="payment" enctype="utf-8">
+					<fieldset>
+					<input type="hidden" name="ik_co_id" value="{INTERKASSA_ID}" />
+					<input type="hidden" name="ik_pm_no" value="{INVOICE_ID}" />
+					<input type="hidden" name="ik_am" value="{INVOICE_SUM}" />
+					<input type="hidden" name="ik_desc" value="{PAYMENT_DESC}" />
+					<input type="submit" name="process" value="{L_BUTTON_TO_PAYMENT}" class="button1" />
+					</fieldset>
+					</form>
+				</td>
+			</tr>
+			<!-- ENDIF -->
+
+			<!-- BEGIN methods -->
+				<tr>
+					<td class="center bg1">{methods.METHOD_TITLE}<p><img src="{methods.IMAGE_DIR}{methods.METHOD_IMAGE}" alt="" /></p></td>
+					<td class="bg2" width="70%">
+						<div class="content">{methods.METHOD_DESCRIPTION}</div>
+					</td>
+				</tr>
+			<!-- END methods -->
+		</tbody>
+	</table>
+	</div>
+</div>
+<!-- ENDIF -->
+
+<!-- IF U_CONTACT_US -->
+<form method="post" action="{U_CONTACT_US}">
+<div class="panel">
+	<div class="inner">
+	<h3>{L_PAYMENT_BODY}</h3>
+	<p>{L_NOTIFY_ADMIN}</p>
+	<div class="post bg3">{L_SUBJECT}{L_COLON}<br />
+		<input class="inputbox autowidth" type="text" name="subject" id="subject" size="50" value="{INVOICE} | {L_INVOICE_SUM}{L_COLON} {INVOICE_SUM}{L_MONEY}" /></div>
+	<div class="post bg3">{L_MESSAGE_BODY}{L_COLON}<br /><i>{L_PAYMENT_BODY_EXPLAIN}</i><br />
+		<textarea class="inputbox" name="message" id="message" rows="3" cols="25">{INVOICE_COMMENT}</textarea></div>
+	<div class="submit-buttons">
+		<!-- IF not S_IS_REGISTERED -->
+		<input type="hidden" name="email" value="{PAYMENT_EMAIL}" />
+		<input type="hidden" name="name" value="{L_GUEST}" />
+		<!-- ENDIF -->
+		<input type="hidden" name="cc_sender" value="0" />
+		<input type="submit" name="submit" class="button1" value="{L_SUBMIT}" />
+		{S_FORM_TOKEN}
+	</div>
+	</div>
+</div>
+</form>
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->

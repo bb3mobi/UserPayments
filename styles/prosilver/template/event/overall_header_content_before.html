@@ -1,0 +1,28 @@
+<!-- IF ADS_TOP -->
+<div class="forabg">
+<table class="table1">
+<tr>
+	<!-- BEGIN adsrow -->
+		<!-- IF adsrow.ADS_POSITION == 'top' -->
+		<td class="row<!-- IF adsrow.S_ROW_COUNT is even --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
+			<!-- IF adsrow.U_ADS_URL --><strong><a href="{adsrow.U_ADS_URL}">{adsrow.L_ADS_NAME}</a></strong><!-- ENDIF -->
+			<!-- IF adsrow.U_ADS_DISABLE -->
+			<a title="{L_ADS_DISALLOW}" href="{adsrow.U_ADS_DISABLE}" class="icon-button report-icon"><span></span></a>
+			<!-- ENDIF -->
+			<div>{adsrow.L_ADS_TEXT}</div>
+			<!-- IF adsrow.L_ADS_DOMAIN and adsrow.ADS_TO_TIME --><em>&copy; {adsrow.L_ADS_DOMAIN} - {adsrow.ADS_TO_TIME}</em><!-- ENDIF -->
+		</td>
+		<!-- ENDIF -->
+	<!-- END adsrow -->
+	<!-- IF S_ADS_TOP -->
+		<td class="row bg3">
+			<strong><a href="{U_ADS_TOP}">{L_ADS_ADD_ENABLE}</a></strong>
+			<!-- IF U_ACP --><a title="{L_ADS_SITES}" href="{U_ADS_SITES}" class="icon-button info-icon"><span></span></a><!-- ENDIF -->
+			<div>{L_ADS_ADD_EXPLAIN}</div>
+			<em>{L_ADS_DAYS_SUM} {L_ADS_TOP}{L_MONEY}</em>
+		</td>
+	<!-- ENDIF -->
+</tr>
+</table>
+</div>
+<!-- ENDIF -->

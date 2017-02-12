@@ -1,0 +1,98 @@
+<!-- INCLUDE overall_header.html -->
+<!-- IF S_ADS_OPTION -->
+	<h2>{L_ADS_ADD}</h2>
+	<p>{L_ADS_ADD_EXPLAIN}</p>
+	<form id="payment" method="post" action="{S_TPAY_ACTION}">
+	<!-- IF .positionrow -->
+	<div class="forabg">
+		<div class="inner">
+		<!-- BEGIN positionrow -->
+		<div class="row bg1<!-- IF positionrow.CAT_ID == CAT_ID --> bg3<!-- ENDIF -->">
+			<input type="radio" name="cat_id" value="{positionrow.CAT_ID}"<!-- IF positionrow.CAT_ID == CAT_ID --> checked="checked"<!-- ENDIF --><!-- IF positionrow.CAT_LIMIT_YES < 1 --> disabled="disabled"<!-- ENDIF --> /> <b>{positionrow.CAT_NAME}</b><br />
+			<i>{positionrow.CAT_COMMENT}</i><br />
+			<!-- IF positionrow.CAT_LIMIT_YES > 0 -->
+			{L_ADS_LIMIT}{L_COLON} {positionrow.CAT_LIMIT} | {L_ADS_LIMIT_YES}{L_COLON} {positionrow.CAT_LIMIT_YES}<br />
+			{L_ADS_DAYS_SUM}{L_COLON} {positionrow.CAT_SUM}{L_MONEY}
+			<!-- ELSE -->
+			<span class="error">{L_ADS_LIMIT_ERROR}</span>
+			<!-- ENDIF -->
+		</div>
+		<!-- END positionrow -->
+		</div>
+	</div>
+	<!-- ENDIF -->
+	<!-- IF ERROR --><p class="error">{ERROR}</p><!-- ENDIF -->
+	<div class="panel">
+		<div class="inner">
+			<!-- IF .nopositionrow -->
+			<div class="post bg3"><b>{L_ADS_OPTION}{L_COLON}</b><br />
+				<select name="cat_id" id="cat_id">
+				<!-- BEGIN positionrow -->
+				<option value="{positionrow.CAT_ID}" <!-- IF positionrow.CAT_ID == CAT_ID --> selected="selected"<!-- ENDIF -->>{positionrow.CAT_NAME} {L_1_DAY} - {positionrow.CAT_SUM}{L_MONEY}</option>
+				<!-- END positionrow -->
+				</select>
+			</div>
+			<!-- ENDIF -->
+			<!-- IF not S_REGISTERED_USER -->
+			<div class="post bg3"><b>{L_EMAIL_ADDRESS}{L_COLON}</b><br />
+				<input type="text" name="email" id="email" value="{EMAIL}" class="inputbox" /></div>
+			<!-- ENDIF -->
+			<div class="post bg3"><b>{L_ADS_NAME}{L_COLON}</b><p>{L_ADS_NAME_EXPLAIN}</p></dt>
+				<input type="text" name="name" id="name" value="{NAME}" class="inputbox" /></div>
+			<div class="post bg3"><b>{L_WEBSITE}{L_COLON}</b><p>{L_ADS_URL_EXPLAIN}</p></dt>
+				<input type="text" name="url" id="url" value="{URL}" class="inputbox" /></div>
+			<div class="post bg3"><b>{L_ADS_TEXT}{L_COLON}</b><p>{L_ADS_TEXT_EXPLAIN}</p><br />
+				<textarea class="inputbox" name="text" id="text" rows="2" cols="25">{TEXT}</textarea></div>
+			<div class="post bg3"><b>{L_ADS_DAYS_EXPLAIN}{L_COLON}</b><br />
+			<input type="number" name="days" id="days" value="{DAYS}" class="inputbox autowidth" /> {L_DAYS}</div>
+		</div>
+	</div>
+	<div class="panel">
+		<div class="inner">
+		<h3>{L_ADS_ADD_RULES}</h3>
+		{L_ADS_ADD_RULES2}
+		</div>
+	</div>
+	<div class="submit-buttons">
+		{S_HIDDEN_FIELDS}<input type="submit" value="{L_CANCEL}" name="cancel" class="button2" />&nbsp;
+		<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+		{S_FORM_TOKEN}
+	</div>
+	</form>
+
+<!-- ELSE -->
+
+<h2>{L_ADS_SITES}</h2>
+<p>{L_ADS_SITES_EXPLAIN}</p>
+
+<!-- IF .adsrow -->
+<div class="forabg">
+<div class="header">{L_ADS_NAME} ({L_WEBSITE})</div>
+<!-- BEGIN adsrow -->
+	<div class="row">
+		<b>{adsrow.L_ADS_NAME}</b> [<a href="{adsrow.U_ADS_URL}">{adsrow.U_ADS_URL}</a>]
+		<!-- IF adsrow.U_ADS_DELETE --><a title="{L_DELETE}" href="{adsrow.U_ADS_DELETE}" class="rightside button">x</a><!-- ENDIF -->
+		<div>{adsrow.L_ADS_TEXT}</div>
+		[{adsrow.ADS_TIME} - {adsrow.ADS_TO_TIME}]
+	<!-- IF adsrow.ADS_ENABLE --><a title="{L_ADS_DISALLOW}" href="{adsrow.U_ADS_DISABLE}">{L_ENABLED}</a><!-- ELSE -->{L_DISABLED}<!-- ENDIF -->
+	</div>
+<!-- END adsrow -->
+</div>
+<!-- IF .pagination -->
+<div class="action-bar">
+	<div class="rightside pagination">
+		{PAGE_NUMBER}
+	</div>
+</div>
+<!-- ENDIF -->
+<!-- ELSE -->
+<div class="panel">
+	<div class="inner">
+	<p>{L_ADS_SITES_NULL}</p>
+	</div>
+</div>
+<!-- ENDIF -->
+
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->

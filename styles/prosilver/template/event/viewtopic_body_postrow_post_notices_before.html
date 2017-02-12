@@ -1,0 +1,28 @@
+<!-- IF postrow.S_DOWNLOAD_ENABLE -->
+<hr />
+<form id="payment" method="post" action="{postrow.U_POST_SHOP_LINK}">
+	<div class="content">
+	<fieldset class="column1 fields1">
+		<dl>
+			<dt>{L_POST_SHOP_PRICE} {postrow.POST_SHOP_PRICE}{L_MONEY}</dt>
+			<dd>
+				<!-- IF postrow.POST_SHOP_AUTHOR -->
+				<input type="number" name="discount_sum" id="discount_sum" value="" placeholder="{L_POST_SHOP_DISCOUNT}" class="inputbox autowidth" /> {L_PERCENT}<!-- ENDIF -->
+			</dd>
+		</dl>
+	</fieldset>
+	<fieldset class="column2 fields2">
+		<dl>
+			<dt title="{L_POST_SHOP_DISCOUNT}">
+				<!-- IF postrow.POST_SHOP_AUTHOR -->
+				<input type="text" name="email" id="email" value="" placeholder="{L_EMAIL_ADDRESS}" class="inputbox autowidth" />
+				<!-- ELSE -->
+				<input type="text" name="code" id="code" value="" placeholder="{L_POST_SHOP_DISCOUNT_CODE}" class="inputbox autowidth" />
+				<!-- ENDIF -->
+			</dt>
+			<dd><input type="submit" name="submit" value="<!-- IF postrow.POST_SHOP_AUTHOR -->{L_SUBMIT}<!-- ELSE -->{L_EXPENSE_GENERATE}<!-- ENDIF -->" class="button2" />{S_FORM_TOKEN}</dd>
+		</dl>
+	</fieldset>
+	</div>
+</form>
+<!-- ENDIF -->

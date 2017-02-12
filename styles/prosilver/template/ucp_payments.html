@@ -1,0 +1,164 @@
+<!-- INCLUDE ucp_header.html -->
+
+<h2>{L_TITLE}</h2>
+
+<div class="panel">
+	<div class="inner">
+	<p>{L_TITLE_EXPLAIN}</p>
+
+	<!-- IF not S_RETENTION_HISTORY -->
+
+		<!-- IF S_PERSONAL_ENABLE and not S_PAYMENT_HISTORY -->
+		<form id="refill" method="post" action="{S_FORM_ACTION}">
+		<h3>{L_UCP_MY_PERSONAL}</h3>
+		<!-- IF ERROR and S_PAY_ACTION == 'refill' --><span class="error">{ERROR}</span><!-- ENDIF -->
+		<table class="table1">
+			<tr>
+				<td class="bg1"><strong>{L_UCP_MY_MONEY}{L_COLON} {USER_MONEY}{L_MONEY}</strong></td>
+				<td class="bg2">
+					<fieldset>
+					<dl>
+						<dt><label for="sum">{L_UCP_MY_TRANSFER}{L_COLON}</label></dt>
+						<dd><input type="number" name="sum" id="sum" value="0" class="inputbox autowidth" /> {L_MONEY}</dd>
+					</dl>
+					</fieldset>
+				</td>
+				<td class="bg2">
+					<input type="hidden" name="action" value="refill" />
+					<input type="submit" name="submit" value="{L_EXPENSE_GENERATE}" class="button1" />
+				</td>
+			</tr>
+		</table>
+		</form>
+		<!-- ENDIF -->
+
+		<h3><!-- IF S_PAYMENT_HISTORY -->{L_UCP_MY_INVOICES}<!-- ELSE -->{L_UCP_INVOICE}<!-- ENDIF --></h3>
+		<!-- IF .invoicerow -->
+		<table class="table1">
+			<tr class="bg3">
+				<th colspan="4">{L_UCP_INVOICE_EXPLAIN}</th>
+			</tr>
+			<!-- BEGIN invoicerow -->
+			<tr class="row<!-- IF invoicerow.S_ROW_COUNT is odd --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
+				<td><strong>{invoicerow.INVOICE} | {L_INVOICE_SUM}{L_COLON} {invoicerow.INVOICE_SUM}{L_MONEY}</strong>
+					<!-- IF invoicerow.INVOICE_COMMENT --><br />{invoicerow.INVOICE_COMMENT}<!-- ENDIF -->
+				</td>
+				<td class="center">{invoicerow.INVOICE_TIME}</td>
+				<td class="center"<!-- IF invoicerow.INVOICE_DONE --> colspan="2"<!-- ENDIF -->>
+					<!-- IF not invoicerow.INVOICE_DONE -->
+					<a title="{L_INVOICE_PAYMENT}" href="{invoicerow.INVOICE_PAYMENT}" class="button icon-button tools-icon"><span>{L_PAYMENT_BUTTON}</span></a>
+					<!-- ELSE -->
+					<span class="error">{L_UCP_INVOICE_PAID}</span>
+					<!-- ENDIF -->
+				</td>
+				<!-- IF not invoicerow.INVOICE_DONE -->
+				<td class="center">
+					<a title="{L_INVOICE_DELETE}" href="{invoicerow.DELETE}" class="button icon-button delete-icon" data-ajax="row_delete"><span>{L_DELETE}</span></a>
+				</td>
+				<!-- ENDIF -->
+			</tr>
+			<!-- END invoicerow -->
+		</table>
+		<!-- ELSE -->
+		<strong>{L_UCP_INVOICE_ERROR}</strong>
+		<!-- ENDIF -->
+
+	<!-- ELSE -->
+
+		<!-- IF S_PERSONAL_ENABLE -->
+		<!-- IF SUM_MINIMUM -->
+		<form id="refill" method="post" action="{S_FORM_ACTION}">
+		<h3>{L_UCP_MY_PERSONAL}</h3>
+		<!-- IF ERROR and S_PAY_ACTION == 'withdrawal' --><span class="error">{ERROR}</span><!-- ENDIF -->
+		<table class="table1">
+			<tr>
+				<td class="bg1"><strong>{L_UCP_MY_MONEY}{L_COLON} {USER_MONEY}{L_MONEY}</strong></td>
+				<td class="bg2">
+					<fieldset>
+					<dl>
+						<dt><label for="sum">{L_UCP_RETENTION_WITHDRAWAL}{L_COLON}</label><br /><em>{L_SUM_MINIMUM}</em></dt>
+						<dd><!-- IF USER_MONEY >= SUM_MINIMUM --><input type="number" name="sum" id="sum" value="0" class="inputbox autowidth" /> {L_MONEY}<!-- ELSE --><span class="error">{L_USER_MONEY_ERROR}</span><!-- ENDIF --></dd>
+					</dl>
+					</fieldset>
+				</td>
+				<!-- IF USER_MONEY >= SUM_MINIMUM -->
+				<td class="bg2">
+					<input type="hidden" name="action" value="withdrawal" />
+					<input type="submit" name="submit" value="{L_UCP_RETENTION_GENERATE}" class="button1" />
+					
+				</td>
+				<!-- ENDIF -->
+			</tr>
+		</table>
+		</form>
+		<!-- ENDIF -->
+
+		<form id="transfer" method="post" action="{S_FORM_ACTION}">
+		<h3>{L_UCP_TRANSFER}</h3>
+		<!-- IF ERROR and S_PAY_ACTION == 'transfer' --><span class="error">{ERROR}</span><!-- ENDIF -->
+		<table class="table1">
+			<tr>
+				<td class="bg1">
+					<fieldset>
+					<dl>
+						<dt><label for="user">{L_USERNAME}{L_COLON}</label></dt>
+						<dd><input type="text" name="user" id="user" value="{USERNAME}" class="inputbox autowidth" /></dd>
+						<dd><a href="{U_FIND_USERNAME}" onclick="find_username(this.href); return false;">{L_FIND_USERNAME}</a></dd>
+					</dl>
+					</fieldset>
+				</td>
+				<td class="bg2"><fieldset><input type="number" name="sum" id="sum" value="<!-- IF S_PAY_ACTION == 'transfer' -->{SUM}<!-- ELSE -->0<!-- ENDIF -->" class="inputbox autowidth" /> {L_MONEY}</fieldset></td>
+				<td class="bg2">
+					<input type="hidden" name="action" value="transfer" />
+					<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+				</td>
+			</tr>
+		</table>
+		</form>
+		<!-- ENDIF -->
+
+		<h3>{L_UCP_RETENTION_HISTORY}</h3>
+
+		<!-- IF .payrow -->
+		<table class="table1">
+			<tr class="bg3">
+				<th colspan="3">{L_UCP_RETENTION_EXPLAIN}</th>
+			</tr>
+			<!-- BEGIN payrow -->
+			<tr class="row<!-- IF payrow.S_ROW_COUNT is odd --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
+				<td><strong>{payrow.PAY_TYPE} {payrow.PAY_SUM}{L_MONEY}</strong>
+					<!-- IF payrow.PAY_NAME --><br />{payrow.PAY_NAME}<!-- ENDIF -->
+				</td>
+				<td class="center">{payrow.PAY_TIME}</td>
+				<td class="center">
+					<!-- IF payrow.PAY_DONE -->
+					<span class="error" style="color: green">{L_UCP_RETENTION_PAID}</span>
+					<!-- ELSE -->
+					<a href="{payrow.SECURE}" title="{L_UCP_RETENTION_W_CONFIRM}"><span class="error">{L_UCP_RETENTION_WAITING}</span></a>
+					<!-- ENDIF -->
+				</td>
+			</tr>
+			<!-- END payrow -->
+		</table>
+		<!-- ELSE -->
+		<strong>{L_UCP_INVOICE_ERROR}</strong>
+		<!-- ENDIF -->
+
+	<!-- ENDIF -->
+
+	<!-- IF .invoicerow or .payrow -->
+	<div class="action-bar bottom">
+		<div class="pagination">
+			<!-- IF .pagination -->
+				<!-- INCLUDE pagination.html -->
+			<!-- ELSE --> 
+				 &bull; {PAGE_NUMBER}
+			<!-- ENDIF -->
+		</div>
+	</div>
+	<!-- ENDIF -->
+
+	</div>
+</div>
+
+<!-- INCLUDE ucp_footer.html -->

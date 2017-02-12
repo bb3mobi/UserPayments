@@ -1,0 +1,39 @@
+<!-- INCLUDE overall_header.html -->
+<div class="post bg1"><a href="{TOPIC_URL}" class="topictitle">{TOPIC_TITLE} - <!-- IF S_POST_ID -->#{S_POST_ID}<!-- ELSE -->{L_BUDGET_TOPIC} {TOPIC_BUDGET}{L_MONEY}<!-- ENDIF --></a><div class="content">{L_BUDGET_ADD_EXPLAIN}</div></div>
+<!-- IF S_BUDGET_ENABLE -->
+<form id="payment" method="post" action="{S_TPAY_ACTION}">
+<div class="panel">
+	<div class="inner">
+	<h2><!-- IF S_POST_ID -->{L_BUDGET_ADD_POST} - {L_BUDGET_TOPIC_POST}<!-- ELSE -->{L_BUDGET_ADD}<!-- ENDIF --></h2>
+	<!-- IF ERROR --><p class="error">{ERROR}</p><!-- ENDIF -->
+	<div class="bg3">{L_EXPENSE_SUM}{L_COLON}<br />
+	<input type="number" name="sum" id="sum" value="{SUM}" class="inputbox autowidth" /> {L_MONEY}</div>
+	<div class="bg3">{L_EXPENSE_COMMENT}{L_COLON}<br />
+	<textarea class="inputbox" name="comment" id="comment" rows="3" cols="25">{COMMENT}</textarea></div>
+	<!-- IF not S_REGISTERED_USER -->
+	<div class="bg3">{L_EMAIL_ADDRESS}{L_COLON}<br />
+	<input type="text" name="email" id="email" value="{EMAIL}" class="inputbox" /></div><!-- ENDIF -->
+	</div>
+</div>
+<div class="panel submit-buttons">
+	{S_HIDDEN_FIELDS}<input type="submit" value="{L_CANCEL}" name="cancel" class="button2" />&nbsp;
+	<input type="submit" name="submit" value="{L_EXPENSE_GENERATE}" class="button1" />
+	{S_FORM_TOKEN}
+</div>
+</form>
+<!-- ENDIF -->
+<!-- BEGIN payment_row -->
+<div class="post<!-- IF payment_row.S_ROW_COUNT is even --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
+<p class="author">{payment_row.PAYMENT_USER} &raquo; {payment_row.PAYMENT_TIME}{L_COMMA_SEPARATOR}{L_EXPENSE_SUM} {payment_row.PAYMENT_PAY}{L_MONEY}</p>
+<!-- IF payment_row.POST_NAME --><a href="{payment_row.PAYMENT_URL}">{payment_row.POST_NAME}</a><!-- ENDIF -->
+<!-- IF payment_row.PAYMENT_COMMENT != payment_row.POST_NAME --><div class="content">{payment_row.PAYMENT_COMMENT}</div><!-- ENDIF -->
+</div>
+<!-- END payment_row -->
+<!-- IF .pagination -->
+<div class="action-bar">
+	<div class="rightside pagination">
+		<!-- INCLUDE pagination.html -->
+	</div>
+</div>
+<!-- ENDIF -->
+<!-- INCLUDE overall_footer.html -->

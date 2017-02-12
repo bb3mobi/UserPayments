@@ -1,0 +1,93 @@
+<!-- INCLUDE ucp_header.html -->
+<h2>{L_TITLE}</h2>
+<div class="panel">
+	<div class="inner">
+	<h2>{L_TITLE}</h2>
+	<p>{L_TITLE_EXPLAIN}</p>
+	</div>
+</div>
+
+<form id="ucp-shop" method="post" action="{S_FORM_ACTION}"{S_FORM_ENCTYPE}>
+<!-- IF S_GRADIENT -->
+<div class="panel">
+	<div class="inner">
+	<h2>{L_UCP_USER_GRADIENT_PLACE}</h2>
+	<!-- IF ERROR --><p class="error">{ERROR}</p><!-- ENDIF -->
+	<div class="post bg3"><b>{L_PAYMENT_INTERNAL}{L_COLON}</b> <i>{USER_MONEY}{L_MONEY}</i>
+		<!-- IF GRADIENT_PRICE > USER_MONEY --><span>({L_USER_MONEY_ERROR})</span><!-- ENDIF -->
+	</div>
+	<div class="post bg3"><b>{L_INVOICE_SUM}{L_COLON}</b> {GRADIENT_PRICE}{L_MONEY}</div>
+	<!-- IF PREVIEW_USERNAME -->
+	<div class="post bg3"><b>{L_PREVIEW}{L_COLON} {PREVIEW_USERNAME}</b></div>
+	<!-- ENDIF -->
+	<div class="post bg3"><b>{L_UCP_USER_GRADIENT_COLOURS} 1{L_COLON}</b><br />
+		<input name="colour" type="text" id="colour" value="{COLOUR}" size="6" maxlength="6" class="inputbox narrow" />
+		<span style="background-color: #{COLOUR};">&nbsp;&nbsp;&nbsp;</span>
+	</div>
+	<div class="post bg3"><b>{L_UCP_USER_GRADIENT_COLOURS} 2{L_COLON}</b><br />
+		<input name="colour2" type="text" id="colour2" value="{COLOUR2}" size="6" maxlength="6" class="inputbox narrow" />
+		<span style="background-color: #{COLOUR2};">&nbsp;&nbsp;&nbsp;</span>
+	</div>
+	<div class="post bg3"><b>{L_COLOUR_SWATCH}{L_COLON}</b><p><i>{L_UCP_USER_GRADIENT_PASTE}</i></p>
+		<div id="color_palette_placeholder" data-orientation="h" data-height="12" data-width="15" data-target="#colour2"></div>
+	</div>
+	</div>
+</div>
+<div class="panel submit-buttons">
+	{S_HIDDEN_FIELDS}
+	<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp; 
+	<input type="submit" value="{L_PREVIEW}" name="preview" class="button1" />&nbsp; 
+	<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+	{S_FORM_TOKEN}
+</div>
+<!-- ENDIF -->
+
+<!-- IF S_STICKY_TOPICS -->
+<div class="panel">
+	<div class="inner">
+	<!-- IF ERROR --><p class="error">{ERROR}</p><!-- ENDIF -->
+	<div class="post bg3"><b>{L_PAYMENT_INTERNAL}{L_COLON}</b> <i>{USER_MONEY}{L_MONEY}</i><p>({L_MONEY_STICKY})</p></div>
+	<div class="post bg3"><b>{L_ADD}{L_COLON}</b>
+		<input type="number" min="0" max="999" name="topic_time_limit" size="3" maxlength="3" value="{TOPIC_TIME_LIMIT}" class="inputbox autowidth" /> {L_DAYS}</div>
+	<div class="post bg3"><b>{L_TOPIC}{L_COLON}</b> <!-- IF TOPIC_ID --><a href="{U_TOPIC}" onclick="this.target='_blank';">{TOPIC_TITLE}</a><!-- ENDIF -->
+		<p><i>{L_UCP_STICKY_TOPIC_ID}</i></p>
+		<input name="topic_id" type="text" id="topic_id" value="{TOPIC_ID}" class="inputbox autowidth" />
+		<span><a href="{U_MY_TOPICS}" onclick="find_username(this.href); return false;">{L_SEARCH_FOR}</a></span></div>
+	</div>
+</div>
+<div class="panel submit-buttons">
+	{S_HIDDEN_FIELDS}
+	<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+	{S_FORM_TOKEN}
+</div>
+<!-- ENDIF -->
+
+<!-- IF S_MINI_SHOP -->
+<div class="forabg">
+<div class="header">{L_UCP_MINISHOP}</div>
+<!-- IF GRADIENT_PRICE -->
+	<div class="row"><a href="{U_GRADIENT}" class="forumtitle">{L_UCP_USER_GRADIENT}</a> &raquo; {GRADIENT_PRICE}{L_MONEY}
+	<div class="content">{L_UCP_USER_GRADIENT_EXPLAIN}</div></div>
+<!-- ENDIF -->
+<!-- IF S_CHANGE_USERNAME -->
+	<div class="row"><a href="{U_REG_DETAILS}" class="forumtitle">{L_UCP_USER_USERNAME}</a> &raquo; {USERNAME_SUM}{L_MONEY}
+	<div class="content">{L_UCP_USER_USERNAME_EXPLAIN}</div></div>
+<!-- ENDIF -->
+<!-- IF STICKY_PRICE -->
+	<div class="row"><a href="{U_STIKY_TOPICS}" class="forumtitle">{L_STICKY_FOR_TOPICS}</a> &raquo; {STICKY_PRICE}{L_MONEY}
+	<div class="content">{L_STICKY_FOR_EXPLAIN}</div></div>
+<!-- ENDIF -->
+<!-- IF S_DONATE_ENABLE -->
+	<div class="row"><a href="{U_DONATE_LINK}" class="forumtitle">{L_DONATE_ADD}</a> &raquo; 0{L_MONEY}
+	<div class="content">{SITENAME} - {L_DONATE_SUBJECT}</div></div>
+<!-- ENDIF -->
+<!-- IF S_ADS_ENABLE -->
+	<div class="row"><a href="{U_ADS_LINK}" class="forumtitle">{L_ADS_ADD}</a> &raquo; {SITENAME}
+	<div class="content">{L_ADS_ADD_EXPLAIN}</div></div>
+<!-- ENDIF -->
+</div>
+<!-- ENDIF -->
+
+</form>
+<div class="copyright"><a href="http://bb3.mobi">User Payments</a> (c) by Anvar</div>
+<!-- INCLUDE ucp_footer.html -->

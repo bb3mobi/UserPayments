@@ -1,0 +1,44 @@
+<!-- INCLUDE overall_header.html -->
+
+<h2>[POST ID{L_COLON} {S_POST_ID}] <a href="{U_POST_URL}">{POST_SUBJECT}</a></h2>
+
+<form id="payment" method="post" action="{S_POST_SHOP_ACTION}">
+<div class="panel">
+	<div class="inner">
+	<h3>{L_POST_SHOP_PRICE} <!-- IF DISCOUNT_PERCENT --><del class="error">{POST_SHOP_PRICE}</del> {DISCOUNT_SUM}<!-- ELSE -->{POST_SHOP_PRICE}<!-- ENDIF -->{L_MONEY}<!-- IF DISCOUNT_PERCENT --> | {L_POST_SHOP_DISCOUNT}{L_COLON} {DISCOUNT_PERCENT}{L_PERCENT}<!-- ENDIF --></h3>
+	<!-- IF S_POST_AUTHOR --><p>{L_POST_SHOP_DISCOUNT_EXPLAIN}</p><!-- ENDIF -->
+	<!-- IF ERROR --><p class="error">{ERROR}</p><!-- ENDIF -->
+	<!-- IF not DISCOUNT_PERCENT -->
+	<fieldset>
+		<!-- IF S_POST_AUTHOR -->
+		<dl>
+			<dt><label for="discount_sum">{L_POST_SHOP_DISCOUNT}{L_COLON}</label></dt>
+			<dd><input type="number" name="discount_sum" id="discount_sum" value="{DISCOUNT_SUM}" class="inputbox autowidth" /> {L_PERCENT}
+		</dl>
+		<dl>
+			<dt><label for="user">{L_USERNAME}{L_COLON}</label></dt>
+			<dd><input type="text" name="user" id="user" value="{USERNAME}" class="inputbox autowidth" /></dd>
+			<dd><a href="{U_FIND_USERNAME}" onclick="find_username(this.href); return false;">{L_FIND_USERNAME}</a></dd>
+		</dl>
+		<!-- ELSE -->
+		<dl>
+			<dt><label for="code">{L_POST_SHOP_DISCOUNT_CODE}{L_COLON}</label></dt>
+			<dd><input type="text" name="code" id="code" value="{DISCOUNT_CODE}" class="inputbox autowidth" /></dd>
+		</dl>
+		<!-- ENDIF -->
+		<dl>
+			<dt><label for="email">{L_EMAIL_ADDRESS}{L_COLON}</label></dt>
+			<dd><input type="text" name="email" id="email" value="{EMAIL}" class="inputbox autowidth" />
+			<!-- IF not S_POST_AUTHOR -->&nbsp;<input type="submit" name="discount" value="{L_SUBMIT}" class="button1" /<!-- ENDIF --></dd>
+		</dl>
+	</fieldset>
+	<!-- ENDIF -->
+	</div>
+</div>
+<fieldset class="submit-buttons">
+	{S_HIDDEN_FIELDS}<input type="submit" value="{L_CANCEL}" name="cancel" class="button2" />&nbsp;
+	<input type="submit" name="submit" value="<!-- IF S_POST_AUTHOR -->{L_SUBMIT}<!-- ELSE -->{L_EXPENSE_GENERATE}<!-- ENDIF -->" class="button1" />
+	{S_FORM_TOKEN}
+</fieldset>
+</form>
+<!-- INCLUDE overall_footer.html -->

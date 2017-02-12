@@ -1,0 +1,138 @@
+<!-- INCLUDE ucp_header.html -->
+
+<h2>{L_TITLE}</h2>
+
+<form id="ucp-shop" method="post" action="{S_FORM_ACTION}"{S_FORM_ENCTYPE}>
+
+<div class="panel">
+	<div class="inner">
+	<p>{L_TITLE_EXPLAIN}</p>
+	<!-- IF ERROR --><p class="error">{ERROR}</p><!-- ENDIF -->
+
+	<!-- IF S_GRADIENT -->
+	<h3>{L_UCP_USER_GRADIENT_PLACE}</h3>
+
+	<fieldset>
+	<dl>
+		<dt><label>{L_PAYMENT_INTERNAL}{L_COLON}</label></dt>
+		<dd><strong>{USER_MONEY}{L_MONEY}</strong>
+			<!-- IF GRADIENT_PRICE > USER_MONEY --><span>({L_USER_MONEY_ERROR})</span><!-- ENDIF -->
+		</dd>
+	</dl>
+	<dl>
+		<dt><label>{L_INVOICE_SUM}{L_COLON}</label></dt>
+		<dd><strong>{GRADIENT_PRICE}{L_MONEY}</strong></dd>
+	</dl>
+	<!-- IF PREVIEW_USERNAME -->
+	<dl>
+		<dt><label>{L_PREVIEW}{L_COLON}</label></dt>
+		<dd><strong>{PREVIEW_USERNAME}</strong></dd>
+	</dl>
+	<!-- ENDIF -->
+	<dl>
+		<dt><label for="colour">{L_UCP_USER_GRADIENT_COLOURS} 1{L_COLON}</label></dt>
+		<dd>
+			<input name="colour" type="text" id="colour" value="{COLOUR}" size="6" maxlength="6" class="inputbox narrow" />
+			<span style="background-color: #{COLOUR};">&nbsp;&nbsp;&nbsp;</span>
+		</dd>
+	</dl>
+	<dl>
+		<dt><label for="colour2">{L_UCP_USER_GRADIENT_COLOURS} 2{L_COLON}</label></dt>
+		<dd>
+			<input name="colour2" type="text" id="colour2" value="{COLOUR2}" size="6" maxlength="6" class="inputbox narrow" />
+			<span style="background-color: #{COLOUR2};">&nbsp;&nbsp;&nbsp;</span>
+		</dd>
+	</dl>
+	<dl>
+		<dt><label for="color_palette_placeholder">{L_COLOUR_SWATCH}{L_COLON}</label><p>{L_UCP_USER_GRADIENT_PASTE}</p></dt>
+		<dd>
+			<div id="color_palette_placeholder" data-orientation="h" data-height="12" data-width="15" data-target="#colour2"></div>
+		</dd>
+	</dl>
+	</fieldset>
+
+	<fieldset class="submit-buttons">
+		{S_HIDDEN_FIELDS}
+		<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp; 
+		<input type="submit" value="{L_PREVIEW}" name="preview" class="button1" />&nbsp; 
+		<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+		{S_FORM_TOKEN}
+	</fieldset>
+	<!-- ENDIF -->
+
+	<!-- IF S_STICKY_TOPICS -->
+	<fieldset>
+	<dl>
+		<dt><label>{L_PAYMENT_INTERNAL}{L_COLON}</label></dt>
+		<dd><strong>{USER_MONEY}{L_MONEY}</strong> <span>({L_MONEY_STICKY})</span></dd>
+	</dl>
+	<dl>
+		<dt><label for="topic_time_limit">{L_ADD}{L_COLON}</label></dt>
+		<dd><label for="topic_time_limit"><input type="number" min="0" max="999" name="topic_time_limit" id="topic_time_limit" size="3" maxlength="3" value="{TOPIC_TIME_LIMIT}" class="inputbox autowidth" /> {L_DAYS}</label></dd>
+	</dl>
+	<dl>
+		<dt>
+			<label for="topic_id">{L_TOPIC}{L_COLON}</label>
+			<!-- IF TOPIC_ID --><a href="{U_TOPIC}" onclick="this.target='_blank';">{TOPIC_TITLE}</a><!-- ENDIF -->
+			<p>{L_UCP_STICKY_TOPIC_ID}</p>
+		</dt>
+		<dd><input name="topic_id" type="text" id="topic_id" value="{TOPIC_ID}" class="inputbox autowidth" />
+		<span><a href="{U_MY_TOPICS}" onclick="find_username(this.href); return false;">{L_SEARCH_FOR}</a></span></dd>
+	</dl>
+	</fieldset>
+
+	<fieldset class="submit-buttons">
+		{S_HIDDEN_FIELDS}
+		<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+		{S_FORM_TOKEN}
+	</fieldset>
+	<!-- ENDIF -->
+
+	<!-- IF S_MINI_SHOP -->
+	<table class="table1">
+		<thead><th>{L_UCP_MINISHOP}</th><th>{L_INFORMATION}</th><th>{L_UCP_MINISHOP_PRICE}</th></thead>
+		<tbody>
+			<!-- IF GRADIENT_PRICE -->
+			<tr>
+				<td class="bg1"><strong><a href="{U_GRADIENT}" title="{L_UCP_USER_GRADIENT_PLACE}">{L_UCP_USER_GRADIENT}</a></strong></td>
+				<td class="bg2" width="60%">{L_UCP_USER_GRADIENT_EXPLAIN}</td>
+				<td class="center bg3" width="10%">{GRADIENT_PRICE}{L_MONEY}</td>
+			</tr>
+			<!-- ENDIF -->
+			<!-- IF S_CHANGE_USERNAME -->
+			<tr>
+				<td class="bg1"><strong><a href="{U_REG_DETAILS}">{L_UCP_USER_USERNAME}</a></strong></td>
+				<td class="bg2" width="60%">{L_UCP_USER_USERNAME_EXPLAIN}</td>
+				<td class="center bg3" width="10%">{USERNAME_SUM}{L_MONEY}</td>
+			</tr>
+			<!-- ENDIF -->
+			<!-- IF STICKY_PRICE -->
+			<tr>
+				<td class="bg1"><strong><a href="{U_STIKY_TOPICS}">{L_STICKY_FOR_TOPICS}</a></strong></td>
+				<td class="bg2" width="60%">{L_STICKY_FOR_EXPLAIN}</td>
+				<td class="center bg3" width="10%">{STICKY_PRICE}{L_MONEY}</td>
+			</tr>
+			<!-- ENDIF -->
+			<!-- IF S_DONATE_ENABLE -->
+			<tr>
+				<td class="bg1"><strong><a href="{U_DONATE_LINK}">{L_DONATE_ADD}</a></strong></td>
+				<td class="bg2" width="60%">{SITENAME} - {L_DONATE_SUBJECT}</td>
+				<td class="center bg3" width="10%">0{L_MONEY}</td>
+			</tr>
+			<!-- ENDIF -->
+			<!-- IF S_ADS_ENABLE -->
+			<tr>
+				<td class="bg1"><strong><a href="{U_ADS_LINK}">{L_ADS_ADD}</a></strong></td>
+				<td class="bg2" width="60%">{L_ADS_ADD_EXPLAIN} ({SITENAME})</td>
+				<td class="center bg3" width="10%"></td>
+			</tr>
+			<!-- ENDIF -->
+		</tbody>
+	</table>
+	<!-- ENDIF -->
+
+	</div>
+</div>
+</form>
+
+<!-- INCLUDE ucp_footer.html -->

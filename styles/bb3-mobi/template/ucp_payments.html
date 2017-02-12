@@ -1,0 +1,109 @@
+<!-- INCLUDE ucp_header.html -->
+
+<div class="panel">
+	<div class="inner">
+	<h2>{L_TITLE}</h2>
+	<p>{L_TITLE_EXPLAIN}</p>
+	</div>
+</div>
+
+<!-- IF not S_RETENTION_HISTORY -->
+
+	<!-- IF S_PERSONAL_ENABLE and not S_PAYMENT_HISTORY -->
+		<form id="refill" method="post" action="{S_FORM_ACTION}">
+		<div class="forabg">
+		<div class="header">{L_UCP_MY_PERSONAL}</div>
+		<!-- IF ERROR and S_PAY_ACTION == 'refill' --><span class="error">{ERROR}</span><!-- ENDIF -->
+		<div class="post bg1"><b>{L_UCP_MY_MONEY}{L_COLON} {USER_MONEY}{L_MONEY}</b></div>
+		<div class="post bg2">
+			<input type="number" name="sum" id="sum" value="0" class="inputbox autowidth" /> {L_MONEY}</dd>
+			<input type="hidden" name="action" value="refill" />
+			<input type="submit" name="submit" value="{L_UCP_MY_TRANSFER}" class="button1" />
+		</div>
+		</div>
+		</form>
+	<!-- ENDIF -->
+
+	<div class="header"><!-- IF S_PAYMENT_HISTORY -->{L_UCP_MY_INVOICES}<!-- ELSE -->{L_UCP_INVOICE}<!-- ENDIF --></div>
+	<!-- IF .invoicerow -->
+		<div class="bg3"><i>{L_UCP_INVOICE_EXPLAIN}</i></div>
+		<!-- BEGIN invoicerow -->
+		<div class="row<!-- IF invoicerow.S_ROW_COUNT is odd --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
+			<p>{invoicerow.INVOICE} | {L_INVOICE_SUM}{L_COLON} {invoicerow.INVOICE_SUM}{L_MONEY} &raquo; {invoicerow.INVOICE_TIME}
+			<!-- IF not invoicerow.INVOICE_DONE --><a title="{L_DELETE}" href="{invoicerow.DELETE}" class="button rightside"><span>x</span></a><!-- ENDIF --></p>
+			<!-- IF invoicerow.INVOICE_COMMENT --><div class="content">{invoicerow.INVOICE_COMMENT}</div><!-- ENDIF -->
+			<div class="notice">
+				<!-- IF not invoicerow.INVOICE_DONE -->
+				<a href="{invoicerow.INVOICE_PAYMENT}" class="button"><span>{L_INVOICE_PAYMENT}</span></a>
+				<!-- ELSE -->
+				<span class="error">{L_UCP_INVOICE_PAID}</span>
+				<!-- ENDIF -->
+			</div>
+		</div>
+		<!-- END invoicerow -->
+	<!-- ELSE -->
+		<div class="row bg3"><b>{L_UCP_INVOICE_ERROR}</b></div>
+	<!-- ENDIF -->
+
+<!-- ELSE -->
+
+	<!-- IF S_PERSONAL_ENABLE -->
+		<!-- IF SUM_MINIMUM -->
+		<form id="refill" method="post" action="{S_FORM_ACTION}">
+		<div class="forabg">
+		<div class="header">{L_UCP_MY_PERSONAL}</div>
+		<!-- IF ERROR and S_PAY_ACTION == 'withdrawal' --><span class="error">{ERROR}</span><!-- ENDIF -->
+		<div class="post bg1"><b>{L_UCP_MY_MONEY}{L_COLON} {USER_MONEY}{L_MONEY}</b></div>
+		<div class="post bg2"><b>{L_UCP_RETENTION_WITHDRAWAL}{L_COLON}</b> <i>{L_SUM_MINIMUM}</i><br />
+		<!-- IF USER_MONEY >= SUM_MINIMUM -->
+			<input type="number" name="sum" id="sum" value="0" class="inputbox autowidth" /> {L_MONEY}
+			<input type="hidden" name="action" value="withdrawal" />
+			<input type="submit" name="submit" value="{L_UCP_RETENTION_GENERATE}" class="button1" />
+		<!-- ELSE --><span class="error">{L_USER_MONEY_ERROR}</span><!-- ENDIF --></div>
+		</div>
+		</form>
+		<!-- ENDIF -->
+		<form id="transfer" method="post" action="{S_FORM_ACTION}">
+		<div class="forabg">
+		<div class="header">{L_UCP_TRANSFER}</div>
+		<!-- IF ERROR and S_PAY_ACTION == 'transfer' --><span class="error">{ERROR}</span><!-- ENDIF -->
+		<div class="post bg1"><b>{L_USERNAME}{L_COLON}</b> <i><a href="{U_FIND_USERNAME}" onclick="find_username(this.href); return false;">{L_FIND_USERNAME}</a></i><br />
+			<input type="text" name="user" id="user" value="{USERNAME}" class="inputbox autowidth" /></div>
+		<div class="post bg2"><input type="number" name="sum" id="sum" value="<!-- IF S_PAY_ACTION == 'transfer' -->{SUM}<!-- ELSE -->0<!-- ENDIF -->" class="inputbox autowidth" /> {L_MONEY}
+			<input type="hidden" name="action" value="transfer" />
+			<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" /></div>
+		</div>
+		</form>
+	<!-- ENDIF -->
+
+	<!-- IF .payrow -->
+	<div class="header">{L_UCP_RETENTION_HISTORY}</div>
+	<div class="row bg3"><i>{L_UCP_RETENTION_EXPLAIN}</i></div>
+		<!-- BEGIN payrow -->
+		<div class="row<!-- IF payrow.S_ROW_COUNT is odd --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
+			<p>{payrow.PAY_TYPE} {payrow.PAY_SUM}{L_MONEY} &raquo; {payrow.PAY_TIME}</p>
+			<!-- IF payrow.PAY_NAME --><div class="content">{payrow.PAY_NAME}</div><!-- ENDIF -->
+			<div class="notice">
+				<!-- IF payrow.PAY_DONE -->
+				<span class="error" style="color: green">{L_UCP_RETENTION_PAID}</span>
+				<!-- ELSE -->
+				<a href="{payrow.SECURE}" class="button">{L_UCP_RETENTION_W_CONFIRM}</a>
+				<!-- ENDIF -->
+			</div>
+		</div>
+		<!-- END payrow -->
+	<!-- ELSE -->
+	<div class="row bg3"><b>{L_UCP_INVOICE_ERROR}</b></div>
+	<!-- ENDIF -->
+
+<!-- ENDIF -->
+
+<!-- IF .pagination -->
+<div class="action-bar">
+	<div class="rightside pagination">
+		<!-- INCLUDE pagination.html -->
+	</div>
+</div>
+<!-- ENDIF -->
+
+<!-- INCLUDE ucp_footer.html -->
